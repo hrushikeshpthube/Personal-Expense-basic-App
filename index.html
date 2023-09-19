@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Basic Tests</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='base.css'>
+    <!-- <script src='main.js'></script> -->
+
+</head>
+
+<body>
+
+
+
+    <button id="btnCounter">+</button>
+    <script>
+
+        let counter = 0;
+        function incrementCounter() {
+            counter = counter + 1;
+            console.log(counter);
+        }
+        console.log("Initial counter=", counter);
+        console.log("click on + button to increment counter")
+
+
+        let element = document.querySelector('#btnCounter');
+        console.log(element);
+        element.addEventListener('click', incrementCounter, false);
+
+    </script>
+</body>
+
+</html>
