@@ -40,13 +40,13 @@
 
             //3.Add expense
             totalexpense = expense + totalexpense
-            console.log("expense=", expense);
-            console.log("totalexpense=", totalexpense);
+            console.log({ expense});//putting brackets'{}'' will display result as  object where  key=value
+            console.log({totalexpense});//putting brackets'{}'' will display result as  object where  key=value
         }
 
 
         const btnElement = document.querySelector('#btnCounter');
-        console.log(btnElement);
+        
         btnElement.addEventListener('click', AddExpense, false);
 
     </script>
