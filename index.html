@@ -6,30 +6,48 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Basic Tests</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='base.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
     <!-- <script src='main.js'></script> -->
 
 </head>
 
 <body>
-
-
-
+    <input id="inpValue" type="text"></input>
+    <!-- we can use input type=number as well -->
+    <!-- dbt :but we still have to  do parseInt because The JavaScript input text value property will produce a string, containing the value of the text field. -->
     <button id="btnCounter">+</button>
+
     <script>
+        //initialize totalexp=0
+        let totalexpense = 0;
+      
 
-        let counter = 0;
-        function incrementCounter() {
-            counter = counter + 1;
-            console.log(counter);
+
+
+
+        //adding expenses
+        function AddExpense() {
+              //1.get value from inp field
+            const inputElement = document.querySelector("#inpValue");
+           
+            const textAmount = inputElement.value;
+            // console.log(typeof(textAmount));// returns string even if type= number in input field 
+            // console.log(typeof(totalexpense))//number
+
+
+            //2.convert string into number
+            expense=parseInt(textAmount);
+
+            //3.Add expense
+            totalexpense = expense + totalexpense
+            console.log("expense=", expense);
+            console.log("totalexpense=", totalexpense);
         }
-        console.log("Initial counter=", counter);
-        console.log("click on + button to increment counter")
 
 
-        let element = document.querySelector('#btnCounter');
-        console.log(element);
-        element.addEventListener('click', incrementCounter, false);
+        const btnElement = document.querySelector('#btnCounter');
+        console.log(btnElement);
+        btnElement.addEventListener('click', AddExpense, false);
 
     </script>
 </body>
