@@ -12,22 +12,26 @@
 </head>
 
 <body>
-    <h1 id="headingel">Output here</h1>
+    <h1 id="headingel"></h1>
     <input id="inpValue" type="text">
     <input id="inpDesc"type='text'>
     <!-- we can use input type=number as well -->
     <!-- dbt :but we still have to  do parseInt because The JavaScript input text value property will produce a string, containing the value of the text field. -->
     <button id="btnCounter">+</button>
+    <div id="expenseTable"></div>
 
     <script>
         const headop=document.querySelector('#headingel');
         
         //initialize totalexp=0
         let totalexpense = 0;
+        headop.textContent="Total=0";
         // refernce for amount
         const inputAmount = document.querySelector("#inpValue");
         //referece for input description
         const inputDesc=document.querySelector('#inpDesc');
+        //reference to expensetable
+        const expenseTab=document.querySelector('#expenseTable');
 
         //declare& initialize allexpense array 
         let allexpense=[];
@@ -60,14 +64,29 @@
             // console.log({ expense});//putting brackets'{}'' will display result as  object where  key=value
             // console.log({totalexpense});//putting brackets'{}'' will display result as  object where  key=value
             //display output
-            headop.textContent=totalexpense;
+            const sometext =`Total =${totalexpense}`
+            headop.textContent=sometext;
+            // const demodata1=allexpense[0];
+            // const demodata2=allexpense[1]
+            // console.log(demodata1,typeof(demodata1));
 
+            //allexpenseHTML will give array of string for each expenseItem with  div item 
+            const allexpenseHTML=allexpense.map((expenseItem)=>`
+            <div>Expense:${expenseItem.amount}::Desc:${expenseItem.desc}</div>
+            `);
+            //joinedallexpenseHTML will cpnvert array of strings into single string using join method (default seprator is , but we use here "")
+            const joinedallexpenseHTML=allexpenseHTML.join("");
+
+            
+            //innerHTML will convert below string with <div>to display
+            expenseTab.innerHTML=joinedallexpenseHTML;
+        
 
         }
 
-
+        //reference to button
         const btnElement = document.querySelector('#btnCounter');
-        
+        //calling function AddExpense when click event happens 
         btnElement.addEventListener('click', AddExpense, false);
 
     </script>
