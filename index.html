@@ -12,36 +12,57 @@
 </head>
 
 <body>
-    <input id="inpValue" type="text"></input>
+    <h1 id="headingel">Output here</h1>
+    <input id="inpValue" type="text">
+    <input id="inpDesc"type='text'>
     <!-- we can use input type=number as well -->
     <!-- dbt :but we still have to  do parseInt because The JavaScript input text value property will produce a string, containing the value of the text field. -->
     <button id="btnCounter">+</button>
 
     <script>
+        const headop=document.querySelector('#headingel');
+        
         //initialize totalexp=0
         let totalexpense = 0;
-      
+        // refernce for amount
+        const inputAmount = document.querySelector("#inpValue");
+        //referece for input description
+        const inputDesc=document.querySelector('#inpDesc');
 
-
-
+        //declare& initialize allexpense array 
+        let allexpense=[];
 
         //adding expenses
         function AddExpense() {
+            
+            //expense object with description=key and amount=value
+            const expense={}
+            const textAmount = inputAmount.value;
+            const textDesc=inputDesc.value;
               //1.get value from inp field
-            const inputElement = document.querySelector("#inpValue");
            
-            const textAmount = inputElement.value;
             // console.log(typeof(textAmount));// returns string even if type= number in input field 
             // console.log(typeof(totalexpense))//number
 
 
             //2.convert string into number
-            expense=parseInt(textAmount);
+            expense.desc=textDesc;
+            expense.amount=parseInt(textAmount,10);
+            // console.log(expense);
+            allexpense.push(expense);
+            console.clear();
+            console.table(allexpense);
+
+            
 
             //3.Add expense
-            totalexpense = expense + totalexpense
-            console.log({ expense});//putting brackets'{}'' will display result as  object where  key=value
-            console.log({totalexpense});//putting brackets'{}'' will display result as  object where  key=value
+            totalexpense = expense.amount + totalexpense
+            // console.log({ expense});//putting brackets'{}'' will display result as  object where  key=value
+            // console.log({totalexpense});//putting brackets'{}'' will display result as  object where  key=value
+            //display output
+            headop.textContent=totalexpense;
+
+
         }
 
 
