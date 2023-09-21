@@ -6,81 +6,140 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Basic Tests</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='styles.css'> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <!-- <script src='main.js'></script> -->
 
+    <script
+			defer
+			src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+			integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+			crossorigin="anonymous"
+		></script>
 </head>
 
 <body>
-    <h1 id="headingel"></h1>
-    <input id="inpValue" type="text">
-    <input id="inpDesc"type='text'>
-    <!-- we can use input type=number as well -->
-    <!-- dbt :but we still have to  do parseInt because The JavaScript input text value property will produce a string, containing the value of the text field. -->
-    <button id="btnCounter">+</button>
-    <div id="expenseTable"></div>
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">Xpenser</span>
+    </nav>
+    <div class="container-fluid bg-light" style="min-height: 100vh">
+        <div class="container">
+            <div class="jumbotron mt-4">
+                <div class="input-group mb-3">
+                    <input id="inpValue"
+                        type="text"
+                        class="form-control"
+                        placeholder="Amount spent"
+                        aria-label="Amount spent"
+                        aria-describedby="spent in rupee"
+                    />
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="spent in rupee">₹</span>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="spent at">@</span>
+                    </div>
+                    <input id="inpDesc" 
+                        type="text"
+                        class="form-control"
+                        placeholder="spent On"
+                        aria-label="spent On"
+                        aria-describedby="spent at"
+                    />
+                    <div class="input-group-append">
+                        <button id="btnCounter"class="btn btn-outline-primary" type="button" id="button-addon2">Add</button>
+                    </div>
+                </div>
+            </div>
+            <h1 id="headingel"></h1>
+           
+            <!-- we can use input type=number as well -->
+            <!-- dbt :but we still have to  do parseInt because The JavaScript input text value property will produce a string, containing the value of the text field. -->
+            <div id="expenseTable">
+                <ul class="list-group">
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <script>
-        const headop=document.querySelector('#headingel');
-        
+        const headop = document.querySelector('#headingel');
+
         //initialize totalexp=0
         let totalexpense = 0;
-        headop.textContent="Total=0";
+        headop.textContent = "Total=0";
         // refernce for amount
         const inputAmount = document.querySelector("#inpValue");
         //referece for input description
-        const inputDesc=document.querySelector('#inpDesc');
+        const inputDesc = document.querySelector('#inpDesc');
         //reference to expensetable
-        const expenseTab=document.querySelector('#expenseTable');
+        const expenseTab = document.querySelector('#expenseTable');
 
         //declare& initialize allexpense array 
-        let allexpense=[];
+        let allexpense = [];
 
         //adding expenses
         function AddExpense() {
-            
+
             //expense object with description=key and amount=value
-            const expense={}
+            const expense = {}
             const textAmount = inputAmount.value;
-            const textDesc=inputDesc.value;
-              //1.get value from inp field
-           
+            const textDesc = inputDesc.value;
+            //1.get value from inp field
+
             // console.log(typeof(textAmount));// returns string even if type= number in input field 
             // console.log(typeof(totalexpense))//number
 
 
             //2.convert string into number
-            expense.desc=textDesc;
-            expense.amount=parseInt(textAmount,10);
+            expense.desc = textDesc;
+            expense.amount = parseInt(textAmount, 10);
             // console.log(expense);
             allexpense.push(expense);
             console.clear();
             console.table(allexpense);
 
-            
+
 
             //3.Add expense
             totalexpense = expense.amount + totalexpense
             // console.log({ expense});//putting brackets'{}'' will display result as  object where  key=value
             // console.log({totalexpense});//putting brackets'{}'' will display result as  object where  key=value
             //display output
-            const sometext =`Total =${totalexpense}`
-            headop.textContent=sometext;
+            const sometext = `Total =${totalexpense}`
+            headop.textContent = sometext;
             // const demodata1=allexpense[0];
             // const demodata2=allexpense[1]
             // console.log(demodata1,typeof(demodata1));
 
             //allexpenseHTML will give array of string for each expenseItem with  div item 
-            const allexpenseHTML=allexpense.map((expenseItem)=>`
-            <div>Expense:${expenseItem.amount}::Desc:${expenseItem.desc}</div>
-            `);
+            const allexpenseHTML = allexpense.map((expenseItem) => {return`
+                <li class="list-group-item d-flex justify-content-between">
+							<div class="d-flex flex-column">
+								${expenseItem.desc}
+								<small class="text-muted">March 11, 2019</small>
+							</div>
+							<div>
+								<span class="px-5">
+                                    ${expenseItem.amount}
+								</span>
+								<button type="button" class="btn btn-outline-danger btn-sm">
+									<i class="fas fa-trash-alt"></i>
+								</button>
+							</div>
+						</li>
+            `});
             //joinedallexpenseHTML will cpnvert array of strings into single string using join method (default seprator is , but we use here "")
-            const joinedallexpenseHTML=allexpenseHTML.join("");
+            const joinedallexpenseHTML = allexpenseHTML.join("");
 
-            
+
             //innerHTML will convert below string with <div>to display
-            expenseTab.innerHTML=joinedallexpenseHTML;
-        
+            expenseTab.innerHTML = joinedallexpenseHTML;
+
 
         }
 
