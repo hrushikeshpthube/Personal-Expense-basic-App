@@ -117,28 +117,31 @@
             // console.log(demodata1,typeof(demodata1));
 
             //allexpenseHTML will give array of string for each expenseItem with  div item 
-            const allexpenseHTML = allexpense.map((expenseItem) => {return`
-                <li class="list-group-item d-flex justify-content-between">
-							<div class="d-flex flex-column">
-								${expenseItem.desc}
-								<small class="text-muted">March 11, 2019</small>
-							</div>
-							<div>
-								<span class="px-5">
-                                    ${expenseItem.amount}
-								</span>
-								<button type="button" class="btn btn-outline-danger btn-sm">
-									<i class="fas fa-trash-alt"></i>
-								</button>
-							</div>
-						</li>
-            `});
+            const allexpenseHTML = allexpense.map((expenseItem) => createListDisplay(expenseItem));
             //joinedallexpenseHTML will cpnvert array of strings into single string using join method (default seprator is , but we use here "")
             const joinedallexpenseHTML = allexpenseHTML.join("");
 
 
             //innerHTML will convert below string with <div>to display
             expenseTab.innerHTML = joinedallexpenseHTML;
+            function createListDisplay({desc,amount})
+            {
+                return`
+                <li class="list-group-item d-flex justify-content-between">
+							<div class="d-flex flex-column">
+								${desc}
+								<small class="text-muted">March 11, 2019</small>
+							</div>
+							<div>
+								<span class="px-5">
+                                    ${amount}
+								</span>
+								<button type="button" class="btn btn-outline-danger btn-sm">
+									<i class="fas fa-trash-alt"></i>
+								</button>
+							</div>
+						</li>`
+            }
 
 
         }
