@@ -73,13 +73,29 @@
 
         // To avoid err -I have weitten below outside->Uncaught ReferenceError: deleteItem is not defined
         function deleteItem(dateValue) {
-                console.log('deleted',dateValue);
-                for (let i=0;i<allexpense.length;i++)
-                {
-                    if(allexpense[i].moment.valueOf()===dateValue)
-                    {console.log("Item to be deleted=",allexpense[i])}
+            const newArr = [];
+            console.log('deleted', dateValue);
+            for (let i = 0; i < allexpense.length; i++) {
+                if (allexpense[i].moment.valueOf() === dateValue) {
+                    totalexpense = totalexpense - allexpense[i].amount
                 }
+                if (allexpense[i].moment.valueOf() !== dateValue) {
+                    newArr.push(allexpense[i]);
+                }// {console.log("Item to be deleted=",allexpense[i])}
+
             }
+            console.log(newArr);
+            allexpense = newArr;//this is when multiple deletes are done
+
+            const allexpenseHTML = newArr.map((expenseItem) => createListDisplay(expenseItem));
+
+            const joinedallexpenseHTML = allexpenseHTML.join("");
+            expenseTab.innerHTML = joinedallexpenseHTML;
+
+            //display total after deletion
+            const sometext = `Total =${totalexpense}`
+            headop.textContent = sometext;
+        }
 
 
         //adding expenses
@@ -89,6 +105,10 @@
             const expense = {}
             const textAmount = inputAmount.value;
             const textDesc = inputDesc.value;
+
+            // Clear input fields after adding expenses
+            document.querySelector('#inpValue').value = '';
+            document.querySelector('#inpDesc').value = '';
             //1.get value from inp field
 
             // console.log(typeof(textAmount));// returns string even if type= number in input field 
@@ -99,11 +119,11 @@
             expense.desc = textDesc;
             expense.amount = parseInt(textAmount, 10);
             expense.moment = new Date();//to display date
-            const options = { year: 'numeric', day: 'numeric', month: 'long' }//in object, order doesn't matter (options is to display date format) 
+
             // console.log(expense);
             allexpense.push(expense);
             console.clear();
-            console.table(allexpense);
+            // console.table(allexpense);
 
 
 
@@ -122,17 +142,25 @@
             const allexpenseHTML = allexpense.map((expenseItem) => createListDisplay(expenseItem));
             //joinedallexpenseHTML will cpnvert array of strings into single string using join method (default seprator is , but we use here "")
             const joinedallexpenseHTML = allexpenseHTML.join("");
+            expenseTab.innerHTML = joinedallexpenseHTML;
+        }
+        //getting buuton element 
+        const btnElement = document.querySelector('#btnCounter');
+        //calling function AddExpense when click event happens 
+        btnElement.addEventListener('click', AddExpense, false);
 
-            //logic of date outside of view
-            function getDateString(momento) {
-                return momento.toLocaleString('en-US', options)
-            }
-            //innerHTML will convert below string with <div>to display
-            
 
-            
-            function createListDisplay({ desc, amount, moment }) {
-                return `
+        //logic of date outside of view
+        function getDateString(momento) {
+            const options = { year: 'numeric', day: 'numeric', month: 'long' }//in object, order doesn't matter (options is to display date format) 
+            return momento.toLocaleString('en-US', options)
+        }
+        //innerHTML will convert below string with <div>to display
+
+
+
+        function createListDisplay({ desc, amount, moment }) {
+            return `
                 <li class="list-group-item d-flex justify-content-between">
 							<div class="d-flex flex-column">
 								${desc}
@@ -147,16 +175,13 @@
 								</button>
 							</div>
 						</li>`
-            }
-            expenseTab.innerHTML = joinedallexpenseHTML;
-
-
         }
 
-        //reference to button
-        const btnElement = document.querySelector('#btnCounter');
-        //calling function AddExpense when click event happens 
-        btnElement.addEventListener('click', AddExpense, false);
+
+
+
+
+
 
     </script>
 </body>
