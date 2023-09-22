@@ -123,7 +123,11 @@
             //joinedallexpenseHTML will cpnvert array of strings into single string using join method (default seprator is , but we use here "")
             const joinedallexpenseHTML = allexpenseHTML.join("");
 
-
+            //logic of date outside of view
+            function getDateString(momento)
+            {
+                return momento.toLocaleString('en-US',options)
+            }
             //innerHTML will convert below string with <div>to display
             expenseTab.innerHTML = joinedallexpenseHTML;
             function createListDisplay({desc,amount,moment})
@@ -132,7 +136,7 @@
                 <li class="list-group-item d-flex justify-content-between">
 							<div class="d-flex flex-column">
 								${desc}
-								<small class="text-muted">${moment.toLocaleString('en-US',options)}</small>
+								<small class="text-muted">${getDateString(moment)}</small>
 							</div>
 							<div>
 								<span class="px-5">
