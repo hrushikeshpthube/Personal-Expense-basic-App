@@ -11,29 +11,22 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <!-- <script src='main.js'></script> -->
 
-    <script
-			defer
-			src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
-			integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
-			crossorigin="anonymous"
-		></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <span class="navbar-brand mb-0 h1">Xpenser</span>
+        <span id="headingel" class="navbar-brand mb-0 h1"></span><!--Total-->
     </nav>
     <div class="container-fluid bg-light" style="min-height: 100vh">
         <div class="container">
             <div class="jumbotron mt-4">
                 <div class="input-group mb-3">
-                    <input id="inpValue"
-                        type="text"
-                        class="form-control"
-                        placeholder="Amount spent"
-                        aria-label="Amount spent"
-                        aria-describedby="spent in rupee"
-                    />
+                    <input id="inpValue" type="text" class="form-control" placeholder="Amount spent"
+                        aria-label="Amount spent" aria-describedby="spent in rupee" />
                     <div class="input-group-append">
                         <span class="input-group-text" id="spent in rupee">₹</span>
                     </div>
@@ -42,25 +35,21 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="spent at">@</span>
                     </div>
-                    <input id="inpDesc" 
-                        type="text"
-                        class="form-control"
-                        placeholder="spent On"
-                        aria-label="spent On"
-                        aria-describedby="spent at"
-                    />
+                    <input id="inpDesc" type="text" class="form-control" placeholder="spent On" aria-label="spent On"
+                        aria-describedby="spent at" />
                     <div class="input-group-append">
-                        <button id="btnCounter"class="btn btn-outline-primary" type="button" id="button-addon2">Add</button>
+                        <button id="btnCounter" class="btn btn-outline-primary" type="button"
+                            id="button-addon2">Add</button>
                     </div>
                 </div>
             </div>
-            <h1 id="headingel"></h1>
-           
+
+
             <!-- we can use input type=number as well -->
             <!-- dbt :but we still have to  do parseInt because The JavaScript input text value property will produce a string, containing the value of the text field. -->
             <div id="expenseTable">
                 <ul class="list-group">
-                    
+
                 </ul>
             </div>
         </div>
@@ -82,6 +71,17 @@
         //declare& initialize allexpense array 
         let allexpense = [];
 
+        // To avoid err -I have weitten below outside->Uncaught ReferenceError: deleteItem is not defined
+        function deleteItem(dateValue) {
+                console.log('deleted',dateValue);
+                for (let i=0;i<allexpense.length;i++)
+                {
+                    if(allexpense[i].moment.valueOf()===dateValue)
+                    {console.log("Item to be deleted=",allexpense[i])}
+                }
+            }
+
+
         //adding expenses
         function AddExpense() {
 
@@ -98,8 +98,8 @@
             //2.convert string into number
             expense.desc = textDesc;
             expense.amount = parseInt(textAmount, 10);
-            expense.moment=new Date();//to display date
-            const options={year:'numeric',day:'numeric',month:'long'}//in object, order doesn't matter (options is to display date format) 
+            expense.moment = new Date();//to display date
+            const options = { year: 'numeric', day: 'numeric', month: 'long' }//in object, order doesn't matter (options is to display date format) 
             // console.log(expense);
             allexpense.push(expense);
             console.clear();
@@ -124,15 +124,15 @@
             const joinedallexpenseHTML = allexpenseHTML.join("");
 
             //logic of date outside of view
-            function getDateString(momento)
-            {
-                return momento.toLocaleString('en-US',options)
+            function getDateString(momento) {
+                return momento.toLocaleString('en-US', options)
             }
             //innerHTML will convert below string with <div>to display
-            expenseTab.innerHTML = joinedallexpenseHTML;
-            function createListDisplay({desc,amount,moment})
-            {
-                return`
+            
+
+            
+            function createListDisplay({ desc, amount, moment }) {
+                return `
                 <li class="list-group-item d-flex justify-content-between">
 							<div class="d-flex flex-column">
 								${desc}
@@ -142,12 +142,13 @@
 								<span class="px-5">
                                     ${amount}
 								</span>
-								<button type="button" class="btn btn-outline-danger btn-sm">
+								<button type="button" onclick="deleteItem(${moment.valueOf()})" class="btn btn-outline-danger btn-sm">
 									<i class="fas fa-trash-alt"></i>
 								</button>
 							</div>
 						</li>`
             }
+            expenseTab.innerHTML = joinedallexpenseHTML;
 
 
         }
