@@ -98,6 +98,8 @@
             //2.convert string into number
             expense.desc = textDesc;
             expense.amount = parseInt(textAmount, 10);
+            expense.moment=new Date();//to display date
+            const options={year:'numeric',day:'numeric',month:'long'}//in object, order doesn't matter (options is to display date format) 
             // console.log(expense);
             allexpense.push(expense);
             console.clear();
@@ -124,13 +126,13 @@
 
             //innerHTML will convert below string with <div>to display
             expenseTab.innerHTML = joinedallexpenseHTML;
-            function createListDisplay({desc,amount})
+            function createListDisplay({desc,amount,moment})
             {
                 return`
                 <li class="list-group-item d-flex justify-content-between">
 							<div class="d-flex flex-column">
 								${desc}
-								<small class="text-muted">March 11, 2019</small>
+								<small class="text-muted">${moment.toLocaleString('en-US',options)}</small>
 							</div>
 							<div>
 								<span class="px-5">
