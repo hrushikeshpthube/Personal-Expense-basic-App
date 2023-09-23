@@ -70,24 +70,8 @@
 
         //declare& initialize allexpense array 
         let allexpense = [];
-
-        // To avoid err -I have weitten below outside->Uncaught ReferenceError: deleteItem is not defined
-        function deleteItem(dateValue) {
-            const newArr = [];
-            console.log('deleted', dateValue);
-            for (let i = 0; i < allexpense.length; i++) {
-                if (allexpense[i].moment.valueOf() === dateValue) {
-                    totalexpense = totalexpense - allexpense[i].amount
-                }
-                if (allexpense[i].moment.valueOf() !== dateValue) {
-                    newArr.push(allexpense[i]);
-                }// {console.log("Item to be deleted=",allexpense[i])}
-
-            }
-            console.log(newArr);
-            allexpense = newArr;//this is when multiple deletes are done
-
-            const allexpenseHTML = newArr.map((expenseItem) => createListDisplay(expenseItem));
+        function renderlist(Arrtemp) {
+            const allexpenseHTML = Arrtemp.map((expenseItem) => createListDisplay(expenseItem));
 
             const joinedallexpenseHTML = allexpenseHTML.join("");
             expenseTab.innerHTML = joinedallexpenseHTML;
@@ -95,6 +79,42 @@
             //display total after deletion
             const sometext = `Total =${totalexpense}`
             headop.textContent = sometext;
+
+        }
+
+        // To avoid err -I have weitten below outside->Uncaught ReferenceError: deleteItem is not defined
+        function deleteItem(dateValue) {
+            //1st way using for 
+            // const newArr = [];
+            // console.log('deleted', dateValue);
+            // for (let i = 0; i < allexpense.length; i++) {
+            //     if (allexpense[i].moment.valueOf() === dateValue) {
+            //         totalexpense = totalexpense - allexpense[i].amount
+            //     }
+            //     if (allexpense[i].moment.valueOf() !== dateValue) {
+            //         newArr.push(allexpense[i]);
+            //     }// {console.log("Item to be deleted=",allexpense[i])}
+
+            // }
+            // console.log(newArr);
+
+
+
+            // 2.other way using filter() instead of for loop
+            const newArr = allexpense.filter(expense => {
+                if (expense.moment.valueOf() !== dateValue) {
+                    return expense;
+                }
+                else {
+                    totalexpense = totalexpense - expense.amount;
+                }
+            }
+            )
+
+            allexpense = newArr;//this is when multiple deletes are done
+
+            renderlist(newArr);
+
         }
 
 
@@ -122,18 +142,14 @@
 
             // console.log(expense);
             allexpense.push(expense);
-            console.clear();
+            // console.clear();
             // console.table(allexpense);
 
 
 
             //3.Add expense
             totalexpense = expense.amount + totalexpense
-            // console.log({ expense});//putting brackets'{}'' will display result as  object where  key=value
-            // console.log({totalexpense});//putting brackets'{}'' will display result as  object where  key=value
-            //display output
-            const sometext = `Total =${totalexpense}`
-            headop.textContent = sometext;
+
             // const demodata1=allexpense[0];
             // const demodata2=allexpense[1]
             // console.log(demodata1,typeof(demodata1));
@@ -141,8 +157,7 @@
             //allexpenseHTML will give array of string for each expenseItem with  div item 
             const allexpenseHTML = allexpense.map((expenseItem) => createListDisplay(expenseItem));
             //joinedallexpenseHTML will cpnvert array of strings into single string using join method (default seprator is , but we use here "")
-            const joinedallexpenseHTML = allexpenseHTML.join("");
-            expenseTab.innerHTML = joinedallexpenseHTML;
+            renderlist(allexpense);//display function 
         }
         //getting buuton element 
         const btnElement = document.querySelector('#btnCounter');
