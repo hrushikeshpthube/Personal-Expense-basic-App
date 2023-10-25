@@ -124,6 +124,7 @@
             //expense object with description=key and amount=value
             const expense = {}
             const textAmount = inputAmount.value;
+
             const textDesc = inputDesc.value;
 
             // Clear input fields after adding expenses
@@ -138,27 +139,41 @@
             //2.convert string into number
             expense.desc = textDesc;
             expense.amount = parseInt(textAmount, 10);
-            expense.moment = new Date();//to display date
+            if ((!isNaN(expense.amount))) {
+                console.log("Number check -valid input");
 
-            // console.log(expense);
-            allexpense.push(expense);
-            // console.clear();
-            // console.table(allexpense);
+                expense.moment = new Date();//to display date
+
+                // console.log(expense);
+                allexpense.push(expense);
+                // console.clear();
+                // console.table(allexpense);
 
 
 
-            //3.Add expense
-            totalexpense = expense.amount + totalexpense
+                //3.Add expense
+                totalexpense = expense.amount + totalexpense
 
-            // const demodata1=allexpense[0];
-            // const demodata2=allexpense[1]
-            // console.log(demodata1,typeof(demodata1));
+                // const demodata1=allexpense[0];
+                // const demodata2=allexpense[1]
+                // console.log(demodata1,typeof(demodata1));
 
-            //allexpenseHTML will give array of string for each expenseItem with  div item 
-            const allexpenseHTML = allexpense.map((expenseItem) => createListDisplay(expenseItem));
-            //joinedallexpenseHTML will cpnvert array of strings into single string using join method (default seprator is , but we use here "")
-            renderlist(allexpense);//display function 
-        }
+                //allexpenseHTML will give array of string for each expenseItem with  div item 
+                const allexpenseHTML = allexpense.map((expenseItem) => createListDisplay(expenseItem));
+                //joinedallexpenseHTML will cpnvert array of strings into single string using join method (default seprator is , but we use here "")
+                renderlist(allexpense);//display function 
+            }//if
+            else {
+                alert("String entered- Wrong input Amount ,Please reenter correct amount");
+                //                document.querySelector('#inpValue').value = '';
+                //              document.querySelector('#inpDesc').value = '';
+                expense.amount = 0
+                expense.desc = 0
+
+
+            }//else
+
+        }//AddExpense
         //getting buuton element 
         const btnElement = document.querySelector('#btnCounter');
         //calling function AddExpense when click event happens 
